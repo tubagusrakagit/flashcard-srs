@@ -1,6 +1,6 @@
 # 🧠 Flashcard SRS (Spaced Repetition System)
 
-![Cover Image/Screenshot Aplikasi](https://via.placeholder.com/800x400.png?text=Flashcard+SRS+App+Screenshot)
+![Cover Image/Screenshot Aplikasi](./assets/COVER README.png)
 
 Aplikasi Full-Stack Flashcard berbasis sistem pengulangan berselang (Spaced Repetition System) yang dirancang untuk mengoptimalkan efisiensi belajar. Menggunakan algoritma Leitner Box yang canggih untuk menentukan kapan waktu terbaik untuk mengulang sebuah materi.
 
