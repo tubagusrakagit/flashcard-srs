@@ -1,0 +1,11 @@
+# Dependencies
+/node_modules
+/client/node_modules
+/server/node_modules
+
+# Logs
+npm-debug.log*
+*.log
+
+# Secrets (PENTING)
+/server/.env
