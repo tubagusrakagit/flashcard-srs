@@ -121,7 +121,18 @@ app.post('/login', async (req, res) => {
 
 // --- ROUTES DECK & FLASHCARD (SEKARANG DILINDUNGI) ---
 
-// 3. Ambil semua daftar Deck (Sekarang butuh protect)
+// 3. GET: Ambil SEMUA kartu milik user yang sedang login
+app.get('/flashcards', protect, async (req, res) => {
+  try {
+    // Cari semua kartu yang userId-nya sama dengan user yang login
+    const cards = await Flashcard.find({ userId: req.userId }); 
+    res.json(cards);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// 4. Ambil semua daftar Deck (Sekarang butuh protect)
 app.get('/decks', protect, async (req, res) => {
   try {
     // Hanya ambil deck milik user yang sedang login
@@ -132,7 +143,70 @@ app.get('/decks', protect, async (req, res) => {
   }
 });
 
-// 4. Ambil kartu SPESIFIK berdasarkan Deck ID
+// 5. POST: Buat Deck Baru
+app.post('/decks', protect, async (req, res) => {
+  try {
+    const { name, icon } = req.body;
+    
+    const newDeck = new Deck({
+      name,
+      icon: icon || '📁', // Gunakan icon default jika tidak ada
+      userId: req.userId // Wajib, menautkan ke user yang sedang login
+    });
+
+    const savedDeck = await newDeck.save();
+    res.status(201).json(savedDeck);
+    
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// 6. DELETE: Hapus Deck
+app.delete('/decks/:id', protect, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Opsional: Hapus SEMUA kartu yang ada di Deck tersebut (Wajib!)
+    await Flashcard.deleteMany({ deckId: id, userId: req.userId });
+
+    // Hapus Deck itu sendiri (Wajib cek kepemilikan)
+    const result = await Deck.deleteOne({ _id: id, userId: req.userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Deck tidak ditemukan atau bukan milik Anda" });
+    }
+
+    res.json({ message: "Deck dan semua kartunya berhasil dihapus!" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// 7. PUT: Update/Edit Nama Deck
+app.put('/decks/:id', protect, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, icon } = req.body;
+
+    // Cari dan update (Wajib cek kepemilikan)
+    const updatedDeck = await Deck.findOneAndUpdate(
+      { _id: id, userId: req.userId },
+      { name, icon },
+      { new: true } // Mengembalikan dokumen yang sudah diupdate
+    );
+
+    if (!updatedDeck) {
+      return res.status(404).json({ message: "Deck tidak ditemukan atau bukan milik Anda" });
+    }
+
+    res.json(updatedDeck);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// 5. Ambil kartu SPESIFIK berdasarkan Deck ID
 app.get('/decks/:deckId/cards', protect, async (req, res) => {
   try {
     const { deckId } = req.params;
@@ -144,7 +218,7 @@ app.get('/decks/:deckId/cards', protect, async (req, res) => {
   }
 });
 
-// 5. POST: Tambah kartu baru (Sekarang butuh protect + userId)
+// 6. POST: Tambah kartu baru (Sekarang butuh protect + userId)
 app.post('/flashcards', protect, async (req, res) => {
   try {
     const { question, answer, deckId } = req.body;
@@ -163,7 +237,7 @@ app.post('/flashcards', protect, async (req, res) => {
   }
 });
 
-// 6. PUT: Update status kartu (SRS Logic)
+// 7. PUT: Update status kartu (SRS Logic)
 app.put('/flashcards/:id', protect, async (req, res) => {
   try {
     const { id } = req.params;
@@ -193,7 +267,7 @@ app.put('/flashcards/:id', protect, async (req, res) => {
   }
 });
 
-// 7. DELETE: Hapus kartu
+// 8. DELETE: Hapus kartu
 app.delete('/flashcards/:id', protect, async (req, res) => {
   try {
     const { id } = req.params;

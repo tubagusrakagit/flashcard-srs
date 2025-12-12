@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# 🧠 Flashcard SRS (Spaced Repetition System)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Cover Image/Screenshot Aplikasi](https://via.placeholder.com/800x400.png?text=Flashcard+SRS+App+Screenshot)
 
-## Available Scripts
+Aplikasi Full-Stack Flashcard berbasis sistem pengulangan berselang (Spaced Repetition System) yang dirancang untuk mengoptimalkan efisiensi belajar. Menggunakan algoritma Leitner Box yang canggih untuk menentukan kapan waktu terbaik untuk mengulang sebuah materi.
 
-In the project directory, you can run:
+## 🌟 Fitur Utama
 
-### `npm start`
+* **User Authentication (JWT):** Login dan Register User yang aman. Data (Deck dan Kartu) terisolasi sepenuhnya per user.
+* **Logika SRS (Spaced Repetition):** Menggunakan sistem Box Level. Kartu naik level jika benar, dan diatur tanggal kemunculan berikutnya (menggunakan logika eksponensial).
+* **Deck Management:** Kartu dikelompokkan dalam kategori (Deck) untuk memisahkan topik belajar (e.g., JavaScript, English Vocab, Sejarah).
+* **CRUD Lengkap:** Kemampuan untuk membuat, membaca, mengubah (melalui review), dan menghapus Kartu.
+* **Desain UX:** Tampilan Brutalist minimalis, kontras tinggi, dan animasi 3D Flip yang mulus pada kartu.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Stack Teknologi
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Area | Teknologi | Keterangan |
+| :--- | :--- | :--- |
+| **Backend/API** | Node.js (Express) | Routing dan logika server. |
+| **Database** | MongoDB (Mongoose) | Database NoSQL yang menyimpan data Deck, Card, dan User. |
+| **Security** | JWT & bcrypt | JSON Web Tokens untuk sesi user, dan bcrypt untuk enkripsi password. |
+| **Frontend/UI** | React.js | Library utama untuk membangun antarmuka pengguna. |
+| **HTTP Client** | Axios | Digunakan untuk melakukan request ke API Backend. |
 
-### `npm test`
+## 📦 Panduan Instalasi Lokal
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Ikuti langkah-langkah di bawah untuk menjalankan proyek di lingkungan lokal Anda:
 
-### `npm run build`
+### Prasyarat
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* [Node.js](https://nodejs.org/) (Versi 18+)
+* [MongoDB Community Server](https://www.mongodb.com/try/download/community) (Harus berjalan di port default `27017`)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Kloning Repositori & Instalasi Dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Kloning dari GitHub
+git clone [https://github.com/tubagusrakagit/flashcard-srs.git](https://github.com/tubagusrakagit/flashcard-srs.git)
+cd flashcard-srs
 
-### `npm run eject`
+# Instalasi Dependencies Backend
+cd server
+npm install
+cd ..
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Instalasi Dependencies Frontend
+cd client
+npm install
+cd ..
